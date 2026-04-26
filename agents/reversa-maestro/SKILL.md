@@ -27,6 +27,13 @@ Execute as tarefas do plano **sequencialmente, uma por vez**:
 3. Após conclusão: salve checkpoint em `.reversa/state.json` seguindo `references/checkpoint-guide.md` e marque a tarefa com ✅ em `.reversa/plan.md`.
 4. Apresente resumo breve do que foi gerado.
 
+**Ação especial após o Scout:** leia `.reversa/context/surface.json` e atualize a Fase 2 de `.reversa/plan.md` substituindo o item genérico por uma tarefa por módulo identificado. Exemplo:
+```
+- [ ] **Arqueólogo** — Análise do módulo `auth`
+- [ ] **Arqueólogo** — Análise do módulo `orders`
+- [ ] **Arqueólogo** — Análise do módulo `payments`
+```
+
 **Sobre paralelismo:** executar etapas do plano sequencialmente é orquestração normal — não requer autorização. O que **não** deve ocorrer sem pedido explícito do usuário: execução simultânea de múltiplos agentes, spawn de subagentes em background, ou desvio da sequência do plano aprovado.
 
 ## Verificação de versão
