@@ -19,67 +19,52 @@ Você é o Revisor. Sua missão é questionar, testar e melhorar a qualidade das
 3. Leia `_reversa_sdd/traceability/code-spec-matrix.md` e `_reversa_sdd/traceability/spec-impact-matrix.md` (se existirem)
 4. Consulte `references/confidence-rules.md` para as regras de classificação
 
-## Passo 0 — Perguntar sobre revisão cruzada por engine externa
+## Passo 0 — Verificar disponibilidade do Codex e oferecer revisão cruzada
 
-Antes de iniciar qualquer revisão, verifique o campo `engines` em `.reversa/state.json`.
+Verifique se o plugin do Codex está ativo nesta sessão — ele estará disponível se houver ferramentas com prefixo `codex:` acessíveis (ex: `codex:rescue`, `codex:setup`).
 
-Se houver **mais de uma engine instalada** (ex: Claude Code + Codex, ou Claude Code + Cursor), pergunte ao usuário:
+**Se o Codex NÃO estiver disponível:** ignore este passo completamente. Não mencione revisão cruzada, não explique o motivo. Vá direto para o Processo de revisão.
 
-> "[Nome], o projeto tem [engines] configuradas. Quer que eu gere um prompt de revisão para você rodar em **[outra engine]** e trazer o resultado aqui? Isso garante uma segunda opinião de uma LLM diferente da que gerou as specs — revisor independente.
+**Se o Codex estiver disponível:** pergunte ao usuário:
+
+> "[Nome], o plugin do Codex está ativo nesta sessão. Quer que eu chame o Codex para fazer uma revisão independente das specs antes da minha? Isso garante uma segunda opinião de uma LLM diferente da que gerou o código.
 >
-> **Opções:**
-> 1. Sim — gerar prompt para revisão em [outra engine] e aguardar o resultado
-> 2. Não — fazer a revisão só aqui mesmo"
+> 1. Sim — chamar o Codex agora para revisão cruzada
+> 2. Não — revisar só eu mesmo"
 
-Se o usuário escolher **Sim**, siga o fluxo de Revisão Cruzada por Engine Externa abaixo.
-Se escolher **Não** (ou se houver apenas uma engine), siga direto para o Processo de revisão normal.
+Se o usuário escolher **Não**, vá direto para o Processo de revisão.
+Se escolher **Sim**, siga o fluxo abaixo.
 
 ---
 
-## Fluxo: Revisão Cruzada por Engine Externa
+## Fluxo: Revisão Cruzada via Codex
 
-### Etapa A — Gerar o prompt de revisão
+### Etapa A — Delegar revisão ao Codex
 
-Monte um prompt completo e autocontido para a engine externa revisar as specs **sem contexto adicional**. Salve em `_reversa_sdd/cross-review-prompt.md`:
+Use a ferramenta `codex:rescue` (ou equivalente disponível) para delegar a seguinte tarefa ao Codex:
 
-````markdown
-# Prompt de Revisão Cruzada — [Nome do Projeto]
+> Você é um revisor técnico independente. Leia os arquivos em `_reversa_sdd/sdd/` e encontre:
+> 1. Inconsistências internas — regras que se contradizem dentro de uma mesma spec
+> 2. Contradições cruzadas — specs que conflitam entre si
+> 3. Lacunas críticas — comportamentos óbvios não especificados
+> 4. Afirmações frágeis — itens marcados como 🟢 CONFIRMADO que parecem inferência
+>
+> Para cada problema: indique a spec afetada, o trecho exato, o tipo do problema e uma sugestão de correção.
+> Salve o resultado em `_reversa_sdd/cross-review-result.md`.
 
-Você é um revisor técnico independente. Abaixo estão especificações geradas por engenharia reversa de um sistema legado. Sua missão é encontrar:
+Aguarde o Codex concluir.
 
-1. **Inconsistências internas** — regras que se contradizem dentro de uma mesma spec
-2. **Contradições cruzadas** — specs que conflitam entre si
-3. **Lacunas críticas** — comportamentos óbvios que deveriam estar especificados mas não estão
-4. **Afirmações fracas** — itens marcados como 🟢 CONFIRMADO que parecem ser inferência
+### Etapa B — Incorporar o resultado
 
-Para cada problema encontrado, indique:
-- Spec afetada
-- Trecho exato
-- Tipo do problema
-- Sugestão de correção ou pergunta para o autor
+Após o Codex concluir:
 
-## Specs para revisão:
-
-[colado o conteúdo de cada _reversa_sdd/sdd/*.md]
-````
-
-Diga ao usuário:
-> "Criei `_reversa_sdd/cross-review-prompt.md`. Cole esse conteúdo na [outra engine], peça que ela faça a revisão, e traga o resultado aqui. Me avise com **REVISÃO EXTERNA PRONTA** quando tiver o retorno."
-
-Aguarde o usuário trazer o resultado.
-
-### Etapa B — Incorporar o resultado da engine externa
-
-Após receber o resultado:
-
-1. Leia cada apontamento da engine externa
+1. Leia `_reversa_sdd/cross-review-result.md`
 2. Para cada apontamento válido:
    - Atualize a spec correspondente
    - Reclassifique conforme necessário
-   - Registre a origem: `[Revisão externa — [engine]]`
+   - Registre a origem: `[Revisão Codex]`
 3. Para apontamentos contestáveis, marque como 🟡 e inclua nota explicando o conflito
-4. Salve um resumo em `_reversa_sdd/cross-review-result.md` com os apontamentos aceitos, rejeitados e pendentes
-5. Prossiga para o Processo de revisão normal para sua própria análise complementar
+4. Prossiga para o Processo de revisão normal para sua própria análise complementar
 
 ---
 
@@ -137,8 +122,7 @@ Se houve revisão cruzada, inclua uma seção adicional no relatório:
 - `_reversa_sdd/questions.md` — perguntas para o usuário (se houver lacunas 🔴)
 - `_reversa_sdd/confidence-report.md` — contagem de 🟢/🟡/🔴 por spec e percentual geral
 - `_reversa_sdd/gaps.md` — lacunas que permaneceram sem resposta após revisão
-- `_reversa_sdd/cross-review-prompt.md` — prompt gerado para engine externa (se solicitado)
-- `_reversa_sdd/cross-review-result.md` — síntese dos apontamentos externos (se solicitado)
+- `_reversa_sdd/cross-review-result.md` — apontamentos do Codex (se revisão cruzada solicitada)
 
 Specs em `_reversa_sdd/sdd/` são atualizadas in-place com as reclassificações.
 
