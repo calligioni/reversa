@@ -75,6 +75,23 @@ plugins:
         - locale: pt
           name: Português
           build: true
+          nav_translations:
+            Home: Início
+            Why Reversa: Por que o Reversa
+            Installation: Instalação
+            How to use: Como usar
+            CLI: CLI
+            Configuration: Configuração
+            Supported engines: Engines suportadas
+            Analysis pipeline: Pipeline de análise
+            Confidence scale: Escala de confiança
+            Agents: Agentes
+            Overview: Visão geral
+            Guide with analogies: Guia com analogias
+            Reversa (Orchestrator): Reversa (Orquestrador)
+            Generated outputs: Saídas geradas
+            Developing from specs: Desenvolvendo com as specs
+            Contributing: Contribuindo
         - locale: es
           name: Español
           build: true
@@ -83,42 +100,33 @@ plugins:
             Why Reversa: Por qué Reversa
             Installation: Instalación
             How to use: Cómo usar
+            CLI: CLI
+            Configuration: Configuración
             Supported engines: Motores compatibles
             Analysis pipeline: Pipeline de análisis
             Confidence scale: Escala de confianza
             Agents: Agentes
             Overview: Visión general
+            Guide with analogies: Guía con analogías
             Reversa (Orchestrator): Reversa (Orquestador)
             Generated outputs: Salidas generadas
+            Developing from specs: Desarrollando con las specs
             Contributing: Contribuir
-          nav_translations:
-            Início: Home
-            Por que o Reversa: Why Reversa
-            Instalação: Installation
-            Como usar: How to use
-            Engines suportadas: Supported engines
-            Pipeline de análise: Analysis pipeline
-            Escala de confiança: Confidence scale
-            Agentes: Agents
-            Visão geral: Overview
-            Reversa (Orquestrador): Reversa (Orchestrator)
-            Saídas geradas: Generated outputs
-            Desenvolvendo com as specs: Developing from specs
-            Contribuindo: Contributing
 
 nav:
-  - Início: index.md
-  - Por que o Reversa: por-que-reversa.md
-  - Instalação: instalacao.md
-  - Como usar: uso.md
+  - Home: index.md
+  - Why Reversa: por-que-reversa.md
+  - Installation: instalacao.md
+  - How to use: uso.md
   - CLI: cli.md
-  - Configuração: configuracao.md
-  - Engines suportadas: engines.md
-  - Pipeline de análise: pipeline.md
-  - Escala de confiança: escala-confianca.md
-  - Agentes:
-    - Visão geral: agentes/index.md
-    - Reversa (Orquestrador): agentes/reversa.md
+  - Configuration: configuracao.md
+  - Supported engines: engines.md
+  - Analysis pipeline: pipeline.md
+  - Confidence scale: escala-confianca.md
+  - Agents:
+    - Overview: agentes/index.md
+    - Guide with analogies: agentes/agents-help.md
+    - Reversa (Orchestrator): agentes/reversa.md
     - Scout: agentes/scout.md
     - Archaeologist: agentes/arqueologo.md
     - Detective: agentes/detetive.md
@@ -128,6 +136,6 @@ nav:
     - Visor: agentes/visor.md
     - Data Master: agentes/data-master.md
     - Design System: agentes/design-system.md
-  - Saídas geradas: saidas/index.md
-  - Desenvolvendo com as specs: desenvolvendo-com-specs.md
-  - Contribuindo: contribuindo.md
+  - Generated outputs: saidas/index.md
+  - Developing from specs: desenvolvendo-com-specs.md
+  - Contributing: contribuindo.md
