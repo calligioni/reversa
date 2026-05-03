@@ -131,6 +131,17 @@ Para cada item do plano, em sequência:
 
 Só avance para o próximo item após resposta. Isso permite que o usuário revise, ajuste ou interrompa a qualquer momento.
 
+**Pausa preventiva entre units:** quando você concluir o último arquivo (`tasks.md`) de uma unit e a sessão já gerou **3 units ou mais** sem pausa, troque a mensagem padrão "Digite CONTINUAR" pela versão com pausa preventiva:
+
+> "✅ [arquivo] concluído. Unit **[X]** está completa e o checkpoint está salvo. Próxima unit: **[Y]**. Você quer:
+>
+> 1. Continuar agora
+> 2. Pausar aqui, digitar `/clear` e retomar com `/reversa` em sessão nova (recomendado se a sessão atual já está longa, preserva qualidade nas próximas units)
+>
+> Pressione 1, 2, ou digite CONTINUAR para opção 1."
+
+Antes de oferecer a opção 2, confirme que `redator_progress` em `.reversa/state.json` reflete o último arquivo concluído. Não force a pausa, o usuário decide.
+
 ### Passo 3, Globais
 
 Após todos os arquivos de unit, gere os globais aplicáveis na ordem: `openapi/`, `user-stories/`, `traceability/code-spec-matrix.md` por último.

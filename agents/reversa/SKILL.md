@@ -80,6 +80,28 @@ Se o contexto estiver se esgotando:
 1. Salve checkpoint em `.reversa/state.json` imediatamente
 2. Diga: "[Nome], vou pausar aqui. Tudo está salvo. Digite `/reversa` em uma nova sessão para continuar."
 
+## Checkpoint preventivo entre etapas
+
+Não espere o contexto estourar. Em marcos discretos do plano, ofereça uma pausa proativa para o usuário recomeçar limpo. Os marcos são:
+
+- Após cada agente concluído (Scout, Archaeologist, Detective, Architect, Writer, Reviewer e os agentes independentes)
+- Antes de iniciar um agente pesado quando o anterior já consumiu sessão longa (Archaeologist, Writer, Reviewer com revisão cruzada)
+
+O critério é heurístico, baseado nos sinais que você consegue observar: quantos arquivos foram lidos, quantos artefatos já estão em `<output_folder>/`, há quantas trocas de mensagem desde o início. Não tente estimar tokens, isso é impreciso entre engines.
+
+Quando achar que vale uma pausa, pergunte assim:
+
+> "[Nome], o **[agente concluído]** terminou e o checkpoint está salvo. A próxima etapa é o **[próximo agente]**, que costuma ser longa. Você quer:
+>
+> 1. Continuar agora nesta sessão
+> 2. Pausar aqui, digitar `/clear` para limpar o contexto, e voltar com `/reversa` em sessão nova (recomendado se a sessão atual já está longa)
+>
+> Pressione 1, 2, ou apenas digite CONTINUAR para opção 1."
+
+Antes de oferecer a opção 2, **confirme que o checkpoint está salvo** em `.reversa/state.json` (campo `phase`, `completed`, `checkpoints` do agente que acabou de rodar). Sem checkpoint válido, oferecer pausa é arriscado.
+
+Não force a pausa. O usuário decide. Se ele não responder ou disser para continuar, prossiga normalmente.
+
 ## Escala de confiança
 
 Sempre usar nas specs geradas:
